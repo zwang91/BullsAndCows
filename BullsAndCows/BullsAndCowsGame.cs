@@ -18,15 +18,24 @@ namespace BullsAndCows
 
         public string Guess(string guess)
         {
-            var countBulls = CountBulls(guess);
-            return $"{countBulls}A0B";
-        }
-
-        private int CountBulls(string guess)
-        {
             var guessDigits = guess.Split(" ");
             var secretDigits = secret.Split(" ");
-            int countBulls = secretDigits.Where((t, index) => t == guessDigits[index]).Count();
+
+            var countCows = CountCows(guessDigits, secretDigits);
+            var countBulls = CountBulls(guessDigits, secretDigits);
+
+            return $"{countBulls}A{countCows - countBulls}B";
+        }
+
+        private int CountCows(string[] guessDigits, string[] secretDigits)
+        {
+            var countCows = guessDigits.Count(t => secretDigits.ToList().Contains(t));
+            return countCows;
+        }
+
+        private int CountBulls(string[] guessDigits, string[] secretDigits)
+        {
+            int countBulls = secretDigits.Where((digit, index) => digit == guessDigits[index]).Count();
             return countBulls;
         }
     }

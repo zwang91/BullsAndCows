@@ -28,17 +28,34 @@ namespace BullsAndCowsTest
             Assert.Equal("4A0B", guessResult);
         }
 
+        [Theory]
+        [InlineData("1 2 3 4", "1 2 5 6")]
+        [InlineData("1 2 3 4", "7 2 3 6")]
+        [InlineData("1 2 3 4", "5 6 3 4")]
+        public void Should_return_xA0B_when_guess_given_guess_digits_having_x_digits_are_same_as_secret(
+            string secretDigits, string guessDigits)
+        {
+            // when
+            var mockSecretGenerator = new Mock<SecretGenerator>();
+            mockSecretGenerator.Setup(generator => generator.GenerateSecret()).Returns(secretDigits);
+            var bullsAndCowsGame = new BullsAndCowsGame(mockSecretGenerator.Object);
+            // given
+            var guessResult = bullsAndCowsGame.Guess(guessDigits);
+            // then
+            Assert.Equal("2A0B", guessResult);
+        }
+
         [Fact]
-        public void Should_return_xA0B_when_guess_given_guess_digits_having_x_digits_are_same_as_secret()
+        public void Should_return_1A1B_when_guess_given_guess_having_1_digit_bull_and_1_digit_cow()
         {
             // when
             var mockSecretGenerator = new Mock<SecretGenerator>();
             mockSecretGenerator.Setup(generator => generator.GenerateSecret()).Returns("1 2 3 4");
             var bullsAndCowsGame = new BullsAndCowsGame(mockSecretGenerator.Object);
             // given
-            var guessResult = bullsAndCowsGame.Guess("1 2 5 6");
+            var guessResult = bullsAndCowsGame.Guess("1 3 5 6");
             // then
-            Assert.Equal("2A0B", guessResult);
+            Assert.Equal("1A1B", guessResult);
         }
     }
 }

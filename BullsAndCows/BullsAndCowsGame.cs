@@ -21,22 +21,10 @@ namespace BullsAndCows
             var guessDigits = guess.Split(" ");
             var secretDigits = secret.Split(" ");
 
-            var countCows = CountCows(guessDigits, secretDigits);
-            var countBulls = CountBulls(guessDigits, secretDigits);
+            var countCows = guessDigits.Count(t => secretDigits.ToList().Contains(t));
+            var countBulls = secretDigits.Where((digit, index) => digit == guessDigits[index]).Count();
 
             return $"{countBulls}A{countCows - countBulls}B";
-        }
-
-        private int CountCows(string[] guessDigits, string[] secretDigits)
-        {
-            var countCows = guessDigits.Count(t => secretDigits.ToList().Contains(t));
-            return countCows;
-        }
-
-        private int CountBulls(string[] guessDigits, string[] secretDigits)
-        {
-            var countBulls = secretDigits.Where((digit, index) => digit == guessDigits[index]).Count();
-            return countBulls;
         }
     }
 }

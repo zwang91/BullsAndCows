@@ -48,7 +48,6 @@ namespace BullsAndCowsTest
         [Theory]
         [InlineData("1 2 3 4", "1 3 5 6")]
         [InlineData("0 1 5 6", "2 1 3 5")]
-        [InlineData("0 1 3 6", "2 6 3 5")]
         public void Should_return_1A1B_when_guess_given_guess_having_1_digit_bull_and_1_digit_cow(
             string secretDigits, string guessDigits)
         {

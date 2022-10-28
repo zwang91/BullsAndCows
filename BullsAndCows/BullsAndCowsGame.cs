@@ -35,7 +35,7 @@ namespace BullsAndCows
 
         private int CountBulls(string[] guessDigits, string[] secretDigits)
         {
-            int countBulls = secretDigits.Where((digit, index) => digit == guessDigits[index]).Count();
+            var countBulls = secretDigits.Where((digit, index) => digit == guessDigits[index]).Count();
             return countBulls;
         }
     }
